@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/CarlosPC402/TwittPC/middlew"
-	"github.com/CarlosPC402/TwittPC/routes"
+	"github.com/CarlosPC402/TwittPC/routers"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
@@ -15,7 +15,9 @@ import (
 func Manejadores() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/registro", middlew.ChequeoBD(routes.Registro)).Methods("POST")
+	router.HandleFunc("/registro", middlew.ChequeoBD(routers.Registro)).Methods("POST")
+	router.HandleFunc("/login", middlew.ChequeoBD(routers.Login)).Methods("POST")
+	router.HandleFunc("/verperfil", middlew.ChequeoBD(middlew.ValidoJWT(routers.VerPerfil))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
