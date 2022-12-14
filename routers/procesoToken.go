@@ -25,7 +25,7 @@ func ProcesoToken(tk string) (*models.Claim, bool, string, error) {
 
 	splitToken := strings.Split(tk, "Bearer")
 	if len(splitToken) != 2 {
-		return claims, false, string(""), errors.New("Formato de Token invalido")
+		return claims, false, string(""), errors.New("formato de token invalido")
 	}
 
 	tk = strings.TrimSpace(splitToken[1])
@@ -37,7 +37,7 @@ func ProcesoToken(tk string) (*models.Claim, bool, string, error) {
 	if err == nil {
 		_, encontrado, _ := bd.ChequeoYaExisteUsuario(claims.Email)
 
-		if encontrado == true {
+		if encontrado {
 			Email = claims.Email
 			IDUsuario = claims.ID.Hex()
 		}
@@ -46,7 +46,7 @@ func ProcesoToken(tk string) (*models.Claim, bool, string, error) {
 	}
 
 	if !tkn.Valid {
-		return claims, false, string(""), errors.New("Formato de Token invalido")
+		return claims, false, string(""), errors.New("formato de token invalido")
 	}
 
 	return claims, false, string(""), err
